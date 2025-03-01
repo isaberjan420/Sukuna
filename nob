@@ -8,6 +8,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local WCS_c = false
 local DP_c = false
 local Uraume_c = false
+local Pusher_c = false
+local Track_c = false
+local Erase_c = false
+local bus_c = false
+local Golem_c = false
 local ohNumber1 = 23.81249993108213
 local ohNumber2 = 1.2064583308063448
 getgenv().wl1 = "a"
@@ -210,7 +215,7 @@ local function Get_Closest_Player(Part)
 end
 
 local Window = Rayfield:CreateWindow({
-   Name = "Sukuna",
+   Name = "nob",
    Icon = "crown", -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "Moveset Script",
    LoadingSubtitle = "By Celerity",
@@ -299,5 +304,82 @@ local Counter = SA:CreateKeybind({
       local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
       wait()
       ReplicatedStorage:FindFirstChild("SM"):FireServer(a)
+   end,
+})
+
+local Track = SA:CreateKeybind({
+   Name = "Trauma",
+   CurrentKeybind = "X",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      fireclickdetector(workspace.Lobby.Nightmare.ClickDetector)
+      local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+      wait()
+      ReplicatedStorage:FindFirstChild("nightmarehit"):FireServer(a.Character.Head)
+   end,
+})
+
+local Erase = SA:CreateKeybind({
+   Name = "Erase",
+   CurrentKeybind = "V",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      if Erase_c == false then
+          Erase_c = true
+          fireclickdetector(workspace.Lobby:FindFirstChild("Za Hando").ClickDetector)
+          ReplicatedStorage:FindFirstChild("Erase"):FireServer()
+          task.wait(16)
+          Erase_c = false
+      end
+   end,
+})
+
+local PusherWallE = SA:CreateKeybind({
+   Name = "Pusher Wall",
+   CurrentKeybind = "F",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      if Pusher_c == false then
+          Pusher_c = true
+          fireclickdetector(workspace.Lobby.Pusher.ClickDetector)
+          ReplicatedStorage:FindFirstChild("PusherWall"):FireServer()
+          task.wait(16)
+          Pusher_c = false
+      end
+   end,
+})
+
+local BusA = SA:CreateKeybind({
+   Name = "Bus",
+   CurrentKeybind = "T",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      if bus_c == false then
+          bus_c = true
+          fireclickdetector(workspace.Lobby.bus.ClickDetector)
+          ReplicatedStorage:FindFirstChild("busmoment"):FireServer()
+          task.wait(1)
+          bus_c = false
+      end
+   end,
+})
+
+local Mahoraga = SA:CreateKeybind({
+   Name = "Mahoraga",
+   CurrentKeybind = "G",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      if Golem_c == false then
+          Golem_c = true
+          fireclickdetector(workspace.Lobby.Golem.ClickDetector)
+          ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer()
+          task.wait(18)
+          Golem_c = false
+      end
    end,
 })
