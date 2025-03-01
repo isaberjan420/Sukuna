@@ -247,19 +247,12 @@ local WCS = SA:CreateKeybind({
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
       if WCS_c == false then
-        if Players.LocalPlayer.leaderstats.Glove == "Slicer" then
-          WCS_c = true
-          game:GetService("ReplicatedStorage").Slicer:FireServer("slash", Players.LocalPlayer.Character.Head.CFrame, Vector3.new(0, 14,0))
-          task.wait(1)
-          WCS_c = false
-        else
           WCS_c = true
           fireclickdetector(workspace.Lobby.Slicer.ClickDetector)
           wait(0.02)
-             game:GetService("ReplicatedStorage").Slicer:FireServer("slash", Players.LocalPlayer.Character.Head.CFrame, Vector3.new(0, 14,0))
+          game:GetService("ReplicatedStorage").Slicer:FireServer("slash", Players.LocalPlayer.Character.Head.CFrame, Vector3.new(0, 14,0))
           task.wait(1)
           WCS_c = false
-        end
       end
    end,
 })
@@ -271,19 +264,12 @@ local DP = SA:CreateKeybind({
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
       if DP_c == false then
-        if Players.LocalPlayer.leaderstats.Glove == "Gravity" then
-          DP_c = true
-          game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
-          task.wait(1)
-          DP_c = false
-        else
           DP_c = true
           fireclickdetector(workspace.Lobby.Gravity.ClickDetector)
           wait(0.02)
           game:GetService("ReplicatedStorage").GeneralAbility:FireServer()
           task.wait(1)
           DP_c = false
-        end
       end
    end,
 })
