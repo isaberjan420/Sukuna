@@ -7,6 +7,7 @@ local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local WCS_c = false
 local DP_c = false
+local Uraume_c = false
 getgenv().wl1 = "a"
 getgenv().wl2 = "b"
 getgenv().wl3 = "c"
@@ -271,5 +272,41 @@ local DP = SA:CreateKeybind({
           task.wait(1)
           DP_c = false
       end
+   end,
+})
+
+
+local CLEAVE = SA:CreateKeybind({
+   Name = "Cleave",
+   CurrentKeybind = "Z",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      fireclickdetector(workspace.Lobby.Killstreak.ClickDetector)
+      local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+      wait()
+      ReplicatedStorage:FindFirstChild("KSHit"):FireServer(a.Character.Head)
+   end,
+})
+
+local CLEAVE = SA:CreateKeybind({
+   Name = "Uraume",
+   CurrentKeybind = "V",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      if Uraume_c == false then
+        Uraume_c = true
+        local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+        fireclickdetector(workspace.Lobby.Replica.ClickDetector)
+        game:GetService("ReplicatedStorage").Duplicate:FireServer(true)
+        wait()
+        fireclickdetector(workspace.Lobby.Ice.ClickDetector)
+        ReplicatedStorage:FindFirstChild("IceHit"):FireServer(a.Character.Head)
+        wait(0.1)
+        ReplicatedStorage:FindFirstChild("IceHit"):FireServer(a.Character.Head)
+        task.wait(14)
+        Uraume_c = false
+    end
    end,
 })
