@@ -282,10 +282,10 @@ local CLEAVE = SA:CreateKeybind({
    HoldToInteract = false,
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
-      fireclickdetector(workspace.Lobby.Killstreak.ClickDetector)
+      fireclickdetector(workspace.Lobby.Squid.ClickDetector)
       local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
       wait()
-      ReplicatedStorage:FindFirstChild("KSHit"):FireServer(a.Character.Head)
+      ReplicatedStorage:FindFirstChild("GeneralHit"):FireServer(a.Character.Head)
    end,
 })
 
