@@ -13,6 +13,8 @@ local Track_c = false
 local Erase_c = false
 local bus_c = false
 local Golem_c = false
+local passivedoom = false
+local autocounter = false
 local ohNumber1 = 23.81249993108213
 local ohNumber2 = 1.2064583308063448
 getgenv().wl1 = "a"
@@ -394,3 +396,50 @@ local Blackhole = SA:CreateKeybind({
           ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer()
    end,
 })
+
+local PD = Tab:CreateToggle({
+   Name = "Passive-Doom",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    passivedoom = Value
+   end,
+})
+
+local AC = Tab:CreateToggle({
+   Name = "Auto-Counter",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    autocounter = Value
+   end,
+})
+
+local function PassiveDoom()
+    while wait(8) do
+        if passivedoom == true then
+          fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
+          wait()
+          ReplicatedStorage.GeneralAbility:FireServer(ohNumber1, ohNumber2)
+        end
+    end
+end
+
+local function AutoCounter()
+    while wait(8) do
+        if autocounter == true then
+            if ragdolled(Players.LocalPlayer.Character) then
+              fireclickdetector(workspace.Lobby.Shukuchi.ClickDetector)
+              local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+              wait()
+              ReplicatedStorage:FindFirstChild("SM"):FireServer(a)
+            end
+        end
+    end
+end
+
+local co1 = coroutine.create(PassiveDoom)
+local co2 = coroutine.create(AutoCounter)
+
+coroutine.resume(co1)
+coroutine.resume(co2)
