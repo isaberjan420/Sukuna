@@ -1,6 +1,6 @@
 repeat task.wait() until game:IsLoaded()
 wait(1)
-
+workspace.Sounds.Select:Destroy()
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -15,6 +15,8 @@ local bus_c = false
 local Golem_c = false
 local passivedoom = false
 local autocounter = false
+local mdelay = {1, 8}
+local mrange = {110, 256}
 getgenv().wl1 = "a"
 getgenv().wl2 = "b"
 getgenv().wl3 = "c"
@@ -288,8 +290,8 @@ local Doom = SA:CreateKeybind({
    HoldToInteract = false,
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
-      local ohNumber1 = math.random(100, 256)
-      local ohNumber2 = math.random(5, 10)
+      local ohNumber1 = math.random(mrange[1], mrange[2])
+      local ohNumber2 = math.random(mdelay[1], mdelay[2])
       fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
       wait()
       ReplicatedStorage.GeneralAbility:FireServer(ohNumber1, ohNumber2)
@@ -388,12 +390,23 @@ local Mahoraga = SA:CreateKeybind({
 
 local Blackhole = SA:CreateKeybind({
    Name = "Blackhole",
-   CurrentKeybind = "G",
+   CurrentKeybind = "H",
    HoldToInteract = false,
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
           fireclickdetector(workspace.Lobby.Blackhole.ClickDetector)
           ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer()
+   end,
+})
+
+local Golden = SA:CreateKeybind({
+   Name = "Golden",
+   CurrentKeybind = "J",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+          fireclickdetector(workspace.Lobby:FindFirstChild("Guardian Angel").ClickDetector)
+          ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer(Players.LocalPlayer)
    end,
 })
 
@@ -418,8 +431,8 @@ local AC = SA:CreateToggle({
 local function PassiveDoom()
     while wait(8) do
         if passivedoom == true then
-          local ohNumber1 = math.random(100, 256)
-          local ohNumber2 = math.random(5, 10)
+          local ohNumber1 = math.random(mrange[1], mrange[2])
+          local ohNumber2 = math.random(mdelay[1], mdelay[2])
           fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
           wait()
           ReplicatedStorage.GeneralAbility:FireServer(ohNumber1, ohNumber2)
