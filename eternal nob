@@ -106,9 +106,6 @@ local function Get_Closest_Player(Part)
         elseif reversed(player.Character) then
             task.wait()
             print("attempt to hit reversed")
-        elseif table.find(Whitelist, player.Name) then
-            task.wait()
-            print("attempt to hit whitelisted")
         elseif wl1 == player.DisplayName then
             task.wait()
             print("attempt to hit Wwwhitelisted")
