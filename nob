@@ -15,8 +15,6 @@ local bus_c = false
 local Golem_c = false
 local passivedoom = false
 local autocounter = false
-local ohNumber1 = 200
-local ohNumber2 = 10
 getgenv().wl1 = "a"
 getgenv().wl2 = "b"
 getgenv().wl3 = "c"
@@ -290,6 +288,8 @@ local Doom = SA:CreateKeybind({
    HoldToInteract = false,
    Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
    Callback = function(Keybind)
+      local ohNumber1 = math.random(100, 256)
+      local ohNumber2 = math.random(5, 10)
       fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
       wait()
       ReplicatedStorage.GeneralAbility:FireServer(ohNumber1, ohNumber2)
@@ -418,6 +418,8 @@ local AC = SA:CreateToggle({
 local function PassiveDoom()
     while wait(8) do
         if passivedoom == true then
+          local ohNumber1 = math.random(100, 256)
+          local ohNumber2 = math.random(5, 10)
           fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
           wait()
           ReplicatedStorage.GeneralAbility:FireServer(ohNumber1, ohNumber2)
