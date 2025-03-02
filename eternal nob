@@ -1,23 +1,9 @@
 repeat task.wait() until game:IsLoaded()
 wait(1)
-workspace.Sounds.Select:Destroy()
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local WCS_c = false
-local DP_c = false
-local Uraume_c = false
-local Pusher_c = false
-local Track_c = false
-local Erase_c = false
-local bus_c = false
-local Golem_c = false
-local passivedoom = false
-local autocounter = false
-getgenv().wl1 = "a"
-getgenv().wl2 = "b"
-getgenv().wl3 = "c"
 local T = {
     TextColor = Color3.fromRGB(192, 192, 192),
 
@@ -60,29 +46,8 @@ local T = {
     PlaceholderColor = Color3.fromRGB(178, 178, 178)
 }
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/isaberjan420/ovb-bb-/refs/heads/main/Whitelist.lua"))()
-
-local Layer1 = Instance.new("Part", workspace)
-local Layer2 = Instance.new("Part", workspace)
-Layer1.Anchored = true
-Layer2.Anchored = true
-Layer1.Position = Vector3.new(0, -20, 0)
-Layer1.Size = Vector3.new(2048, 4, 2048)
-Layer1.Material = Enum.Material.ForceField
-Layer2.Position = Vector3.new(0, -30, 0)
-Layer2.Size = Vector3.new(2048, 4, 2048)
-Layer2.Material = Enum.Material.ForceField
-Layer2.Color = Color3.new(0, 1, 0)
-Layer2.Parent = ReplicatedStorage
-Layer1.Parent = ReplicatedStorage
-Layer1.Transparency = 0.9
-Layer2.Transparency = 0.9
-
-Layer2.Touched:Connect(function(a)
-    if a.Parent.Name == Players.LocalPlayer.Name then
-        Players.LocalPlayer.Character:MoveTo(Vector3.new(math.random(-90, 90), 50, math.random(-90, 90)))
-    end 
-end)
+local DR_D = false
+local DR_S = false
 
 local function Back_Position(Part, Studs)
     local Position = Part.Position
@@ -121,41 +86,6 @@ local function IsSteve(character)
         end
     end
     return a
-end
-
-local function loopgt()
-    while wait() do
-        if looptp == true then
-            for _,v in pairs(Players:GetPlayers()) do
-                if v.DisplayName == expt then
-                    local a = (Back_Position(v.Character.PrimaryPart, -(offset)))
-                    wait()
-                    Players.LocalPlayer.Character:MoveTo(a)
-                end
-            end
-        end
-    end
-end
-
-local function MXD()
-    while wait() do
-        if Mixedd == true then
-            for _,v in pairs(Players:GetPlayers()) do
-                if v.DisplayName == expt then
-                    local a = (v.Character.PrimaryPart.Position + Vector3.new(math.random(-4, 4), math.random(-4, 4), math.random(-4, 4)))
-                    wait()
-                    Players.LocalPlayer.Character:MoveTo(a)
-                end
-            end
-        end
-    end
-end
-
-local function whitelist()
-    while task.wait(2) do
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/isaberjan420/ovb-bb-/refs/heads/main/Whitelist.lua"))()
-        print("refreshed whitelist")
-    end
 end
 
 local function Get_Closest_Player(Part)
@@ -200,6 +130,37 @@ local function Get_Closest_Player(Part)
     return closestPlayer
 end
 
+local function drs()
+    while task.wait(1) do
+        if DR_S == true then
+            fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
+            wait()
+            ReplicatedStorage.GeneralAbility:FireServer(256, 9)
+        end
+    end
+end
+
+local function drd()
+    while task.wait(1) do
+        if DR_D == true then
+            fireclickdetector(workspace.Lobby.Meteor.ClickDetector)
+            wait()
+            ReplicatedStorage.GeneralAbility:FireServer(512, 25)
+        end
+    end
+end
+
+local function ac()
+    while task.wait(1) do
+        if AC == true then
+            fireclickdetector(workspace.Lobby.Shukuchi.ClickDetector)
+            local x = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+            wait()
+            ReplicatedStorage.SM:FireServer(x)
+        end
+    end
+end
+
 local Window = Rayfield:CreateWindow({
    Name = "nob | rob junior",
    Icon = "crown", -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
@@ -236,10 +197,62 @@ local Window = Rayfield:CreateWindow({
 
 local SA = Window:CreateTab("Moveset", "swords")
 
+local Position = SA:CreateToggle({
+   Name = "Boss Position (Starter)",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   if Value == true then
+       Players.LocalPlayer.Character:MoveTo(Vector3.new(0, 16, 0))
+       wait()
+       Players.LocalPlayer.Character.Torso.Anchored = true
+   elseif Value == false then
+       Players.LocalPlayer.Character.Torso.Anchored = false
+       Players.LocalPlayer.Character:MoveTo(Vector3.new(0, -5, 0))
+   end
+   end,
+})
 
+local Doomsday_Rain_Dramatic = SA:CreateToggle({
+   Name = "Doomsday Rain (Dramatic)",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   DR_D = Value
+   end,
+})
 
-local co1 = coroutine.create(PassiveDoom)
-local co2 = coroutine.create(AutoCounter)
+local Doomsday_Rain_Swift = SA:CreateToggle({
+   Name = "Doomsday Rain (Swift)",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+   DR_S = Value
+   end,
+})
+
+local Auto_Counter = SA:CreateToggle({
+   Name = "Auto Counter",
+   CurrentValue = false,
+   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+    AC = Value
+   end,
+})
+
+local Golden_Form = SA:CreateButton({
+   Name = "Golden Aura",
+   Callback = function()
+   fireclickdetector(workspace.Lobby:FindFirstChild("Guardian Angel").ClickDetector)
+   wait()
+   ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer()
+   end,
+})
+
+local co1 = coroutine.create(drs)
+local co2 = coroutine.create(drd)
+local co3 = coroutine.create(ac)
 
 coroutine.resume(co1)
 coroutine.resume(co2)
+coroutine.resume(co3)
