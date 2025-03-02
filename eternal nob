@@ -48,6 +48,7 @@ local T = {
 
 local DR_D = false
 local DR_S = false
+local AC = false
 
 local function Back_Position(Part, Studs)
     local Position = Part.Position
@@ -151,12 +152,14 @@ local function drd()
 end
 
 local function ac()
-    while task.wait(1) do
+    while task.wait(0.5) do
         if AC == true then
-            fireclickdetector(workspace.Lobby.Shukuchi.ClickDetector)
-            local x = Get_Closest_Player(Players.LocalPlayer.Character.Head)
-            wait()
-            ReplicatedStorage.SM:FireServer(x)
+            if ragdolled(Players.LocalPlayer.Character) then
+                fireclickdetector(workspace.Lobby.Shukuchi.ClickDetector)
+                local x = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+                wait(0.3)
+                ReplicatedStorage:FindFirstChild("SM"):FireServer(x)
+            end
         end
     end
 end
@@ -231,12 +234,16 @@ local Doomsday_Rain_Swift = SA:CreateToggle({
    end,
 })
 
-local Auto_Counter = SA:CreateToggle({
-   Name = "Auto Counter",
-   CurrentValue = false,
-   Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
-    AC = Value
+local Counter = SA:CreateKeybind({
+   Name = "Counter",
+   CurrentKeybind = "Z",
+   HoldToInteract = false,
+   Flag = "Keybind1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Keybind)
+      fireclickdetector(workspace.Lobby.Shukuchi.ClickDetector)
+      local a = Get_Closest_Player(Players.LocalPlayer.Character.Head)
+      wait()
+      ReplicatedStorage:FindFirstChild("SM"):FireServer(a)
    end,
 })
 
@@ -245,7 +252,7 @@ local Golden_Form = SA:CreateButton({
    Callback = function()
    fireclickdetector(workspace.Lobby:FindFirstChild("Guardian Angel").ClickDetector)
    wait()
-   ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer()
+   ReplicatedStorage:FindFirstChild("GeneralAbility"):FireServer(Players.LocalPlayer)
    end,
 })
 
@@ -256,3 +263,9 @@ local co3 = coroutine.create(ac)
 coroutine.resume(co1)
 coroutine.resume(co2)
 coroutine.resume(co3)
+
+for i,v in pairs(workspace.Sounds:GetChildren()) do
+    if v.Name == "Select" then
+        v:Destroy()
+    end
+end
